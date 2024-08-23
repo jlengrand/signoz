@@ -105,10 +105,10 @@ services:
       - "8123:8123"
       - "9181:9181"
     volumes:
-      - ./docker/clickhouse-setup/clickhouse-config.xml:/etc/clickhouse-server/config.xml
-      - ./docker/clickhouse-setup/clickhouse-users.xml:/etc/clickhouse-server/users.xml
-      - ./docker/clickhouse-setup/custom-function.xml:/etc/clickhouse-server/custom-function.xml
-      - ./docker/clickhouse-setup/clickhouse-cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
+      - ./deploy/docker/clickhouse-setup/clickhouse-config.xml:/etc/clickhouse-server/config.xml
+      - ./deploy/docker/clickhouse-setup/clickhouse-users.xml:/etc/clickhouse-server/users.xml
+      - ./deploy/docker/clickhouse-setup/custom-function.xml:/etc/clickhouse-server/custom-function.xml
+      - ./deploy/docker/clickhouse-setup/clickhouse-cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
       # - ./clickhouse-storage.xml:/etc/clickhouse-server/config.d/storage.xml
       - ./data/clickhouse/:/var/lib/clickhouse/
       - ./user_scripts:/var/lib/clickhouse/user_scripts/
@@ -175,7 +175,7 @@ services:
     #   - "6060:6060"     # pprof port
     #   - "8080:8080"     # query-service port
     volumes:
-      - ./docker/clickhouse-setup/prometheus.yml:/root/config/prometheus.yml
+      - ./deploy/docker/clickhouse-setup/prometheus.yml:/root/config/prometheus.yml
       - ../dashboards:/root/config/dashboards
       - ./data/signoz/:/var/lib/signoz/
     environment:
@@ -240,8 +240,8 @@ services:
       ]
     user: root # required for reading docker container logs
     volumes:
-      - ./docker/clickhouse-setup/otel-collector-config.yaml:/etc/otel-collector-config.yaml
-      - ./docker/clickhouse-setup/otel-collector-opamp-config.yaml:/etc/manager-config.yaml
+      - ./deploy/docker/clickhouse-setup/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./deploy/docker/clickhouse-setup/otel-collector-opamp-config.yaml:/etc/manager-config.yaml
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /:/hostfs:ro
     environment:
