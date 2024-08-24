@@ -105,10 +105,22 @@ services:
       - "8123:8123"
       - "9181:9181"
     volumes:
-      - ./deploy/docker/clickhouse-setup/clickhouse-config.xml:/etc/clickhouse-server/config.xml
-      - ./deploy/docker/clickhouse-setup/clickhouse-users.xml:/etc/clickhouse-server/users.xml
-      - ./deploy/docker/clickhouse-setup/custom-function.xml:/etc/clickhouse-server/custom-function.xml
-      - ./deploy/docker/clickhouse-setup/clickhouse-cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
+      - 
+        type: bind
+        source: './deploy/docker/clickhouse-setup/clickhouse-config.xml'
+        target: '/etc/clickhouse-server/config.xml'
+      - 
+        type: bind
+        source: './deploy/docker/clickhouse-setup/clickhouse-users.xml'
+        target: '/etc/clickhouse-server/users.xml'
+      - 
+        type: bind
+        source: './deploy/docker/clickhouse-setup/custom-function.xml'
+        target: '/etc/clickhouse-server/custom-function.xml'
+      - 
+        type: bind
+        source: './deploy/docker/clickhouse-setup/clickhouse-cluster.xml'
+        target: '/etc/clickhouse-server/config.d/cluster.xml'
       # - ./clickhouse-storage.xml:/etc/clickhouse-server/config.d/storage.xml
       - ./data/clickhouse/:/var/lib/clickhouse/
       - ./user_scripts:/var/lib/clickhouse/user_scripts/
@@ -175,7 +187,10 @@ services:
     #   - "6060:6060"     # pprof port
     #   - "8080:8080"     # query-service port
     volumes:
-      - ./deploy/docker/clickhouse-setup/prometheus.yml:/root/config/prometheus.yml
+      - 
+        type: bind
+        source: './deploy/docker/clickhouse-setup/prometheus.yml'
+        target: '/root/config/prometheus.yml'
       - ../dashboards:/root/config/dashboards
       - ./data/signoz/:/var/lib/signoz/
     environment:
@@ -240,8 +255,14 @@ services:
       ]
     user: root # required for reading docker container logs
     volumes:
-      - ./deploy/docker/clickhouse-setup/otel-collector-config.yaml:/etc/otel-collector-config.yaml
-      - ./deploy/docker/clickhouse-setup/otel-collector-opamp-config.yaml:/etc/manager-config.yaml
+      - 
+        type: bind
+        source: './deploy/docker/clickhouse-setup/otel-collector-config.yaml'
+        target: '/etc/otel-collector-config.yaml'
+      - 
+        type: bind
+        source: './deploy/docker/clickhouse-setup/otel-collector-opamp-config.yaml'
+        target: '/etc/manager-config.yaml'
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /:/hostfs:ro
     environment:
